@@ -2,8 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PomodoroTimer from './app/PomodoroTimer';
+import {styles} from './app/styles/';
 
-export default function App() {
+export default function App({ navigation }) {
   return (
     <View style={styles.container}>
       <PomodoroTimer/>
@@ -11,12 +12,3 @@ export default function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

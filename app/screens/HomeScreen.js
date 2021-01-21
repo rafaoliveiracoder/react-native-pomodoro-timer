@@ -1,10 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 import {PomoStatus, PomoDisplay, PomoControls} from '../components';
+import {styles} from '../styles/';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.wrapper}>
       <PomoStatus />
       <PomoDisplay />
       <PomoControls />
