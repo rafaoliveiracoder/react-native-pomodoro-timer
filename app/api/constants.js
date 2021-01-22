@@ -10,8 +10,8 @@ export const BUTTON_ICON_COLOR = '#000';
 export const BUTTON_ICON_BG_COLOR = HEADER_COLOR;
 
 //REDUX
-export const DEFAULT_WORK_TIME = {min:2, sec:0};
-export const DEFAULT_BREAK_TIME = {min:1, sec:0};
+export const DEFAULT_WORK_TIME = {min:25, sec:0};
+export const DEFAULT_BREAK_TIME = {min:5, sec:0};
 
 //REDUC ACTIONS
 export const SET_INITIAL_WORK_TIME = 'SET_INITIAL_WORK_TIME';
