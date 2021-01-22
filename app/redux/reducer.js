@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, CHANGE_WORK_STATUS, SET_CLOCK, STOP_CLOCK, START_CLOCK, UPDATE_TIMER, RESET_TIMER} from '../api/constants';
+import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, CHANGE_WORK_STATUS, RESET_WORK_STATUS, SET_CLOCK, STOP_CLOCK, START_PAUSE_CLOCK, UPDATE_TIMER, RESET_TIMER} from '../api/constants';
 import { Timer } from '../utils';
 
 //controls WORK and BREAK times
@@ -7,6 +7,11 @@ const workStatusReducer = (state=true, action) => {
     if(action.type === CHANGE_WORK_STATUS){
         return !state;
     }
+
+    if(action.type === RESET_WORK_STATUS){
+        return true;
+    }
+   
     return state;
 }
 
@@ -15,17 +20,19 @@ const initialValuesReducer = (state = {initialWorkTime: DEFAULT_WORK_TIME, initi
 }
 
 //The tic tac guy
-const clockReducer = (state = new Timer(), action) => {
-    if(action.type===START_CLOCK){
-        state&&state.start();
+const clockReducer = (state = {timer:new Timer(), isRunning:false}, action) => {
+    if(action.type===SET_CLOCK){
+        state.timer.setDispatcher(action.payload.dispatch, action.payload.func) 
     }
 
-    if(action.type===SET_CLOCK){
-        state.setDispatcher(action.payload.dispatch, action.payload.func) 
+    if(action.type===START_PAUSE_CLOCK){
+        !state.timer.isRunning?state.timer.start():state.timer.stop();
+        state.isRunning=state.timer.isRunning;
     }
 
     if(action.type===STOP_CLOCK){
-        state&&state.stop();
+        state&&state.timer.stop();
+        state.isRunning=state.timer.isRunning;
     }
 
     return state;

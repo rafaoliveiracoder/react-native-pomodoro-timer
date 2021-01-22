@@ -18,6 +18,8 @@ export default class Timer{
             this.is_running = true;
         }else{
             clearInterval(this.timer);
+            this.timer= setInterval(()=>this.dispatch(this.func()), 1000);
+            this.is_running = true;
         }
     }
     stop(){

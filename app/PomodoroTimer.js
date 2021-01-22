@@ -28,7 +28,7 @@ const PomodoroTimer = () => {
   useEffect(() => {
     //Init and starts Redux clock
     dispatch(setClock(dispatch, updateTimer));
-    dispatch(startClock());
+    
     return () => dispatch(stopClock());
   }, []);
 
@@ -39,7 +39,6 @@ const PomodoroTimer = () => {
       }
       dispatch(changeWorkStatus());
     }
-    console.log('time',timer)
   }, [timer]);
 
 

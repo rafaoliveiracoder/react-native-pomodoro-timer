@@ -1,7 +1,12 @@
-import {SET_CLOCK, START_CLOCK, STOP_CLOCK, UPDATE_TIMER, RESET_TIMER, CHANGE_WORK_STATUS} from '../api/constants';
+import {SET_CLOCK, START_PAUSE_CLOCK, STOP_CLOCK, UPDATE_TIMER, RESET_TIMER, CHANGE_WORK_STATUS, RESET_WORK_STATUS} from '../api/constants';
 
 export const changeWorkStatus = () =>({
     type: CHANGE_WORK_STATUS,
+    payload:''
+})
+
+export const resetWorkStatus = () =>({
+    type: RESET_WORK_STATUS,
     payload:''
 })
 
@@ -20,12 +25,12 @@ export const setClock = (dispatch, func) =>({
     payload:{dispatch,func}
 })
 
-export const startClock = (dispatch, func) =>({
-    type: START_CLOCK,
+export const startPauseClock = () =>({
+    type: START_PAUSE_CLOCK,
     payload:''
 })
 
-export const stopClock = (dispatch, func) =>({
+export const stopClock = () =>({
     type: STOP_CLOCK,
     payload:''
 })
