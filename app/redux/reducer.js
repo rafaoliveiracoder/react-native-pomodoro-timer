@@ -46,7 +46,7 @@ const timerReducer = (state = DEFAULT_WORK_TIME, action) => {
                     ({min: state.min, sec: state.sec-1})
                     :state
                 :state.min>0?
-                    ({min: state.min-1, sec: 2})
+                    ({min: state.min-1, sec: 59})
                     :state
 
         case RESET_TIMER:
