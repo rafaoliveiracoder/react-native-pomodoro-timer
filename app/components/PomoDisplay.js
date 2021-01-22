@@ -20,7 +20,7 @@ const PomoDisplay = () => {
   }, []);
 
   useEffect(() => {
-    // Atualiza o titulo do documento usando a API do browser
+    
     if(timer.min===0 && timer.sec===0){
       clearInterval(interval);
       console.log('STOPPED')
@@ -28,9 +28,11 @@ const PomoDisplay = () => {
     console.log('time',timer)
   }, [timer]);
 
+  //Displays the time in format XX:XX. If min < 10 or sec < 10, concats a '0' at number's start.
+
   return (
     <View>
-      <Text>Timer</Text>
+      <Text>{timer.min<10?'0'+timer.min:timer.min}:{timer.sec<10?'0'+timer.sec:timer.sec}</Text>
     </View>
   );
 }

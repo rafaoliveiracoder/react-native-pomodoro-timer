@@ -8,7 +8,7 @@ const reducer = (state = {min:2, sec:0}, action) => {
                     ({min: state.min, sec: state.sec-1})
                     :state
                 :state.min>0?
-                    ({min: state.min-1, sec: 3})
+                    ({min: state.min-1, sec: 59})
                     :state
 
         case RESET_TIME:
