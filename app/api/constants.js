@@ -10,5 +10,15 @@ export const BUTTON_ICON_COLOR = '#000';
 export const BUTTON_ICON_BG_COLOR = HEADER_COLOR;
 
 //REDUX
-export const UPDATE_TIME = 'UPDATE_TIME';
-export const RESET_TIME = 'RESET_TIME';
+export const DEFAULT_WORK_TIME = {min:2, sec:0};
+export const DEFAULT_BREAK_TIME = {min:1, sec:0};
+
+//REDUC ACTIONS
+export const SET_INITIAL_WORK_TIME = 'SET_INITIAL_WORK_TIME';
+export const SET_INITIAL_BREAK_TIME = 'SET_INITIAL_BREAK_TIME';
+export const CHANGE_WORK_STATUS = 'CHANGE_WORK_STATUS';
+export const SET_CLOCK = 'SET_CLOCK';
+export const START_CLOCK = 'START_CLOCK';
+export const STOP_CLOCK = 'STOP_CLOCK';
+export const UPDATE_TIMER = 'UPDATE_TIMER';
+export const RESET_TIMER = 'RESET_TIMER';
