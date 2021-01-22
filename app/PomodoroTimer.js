@@ -1,8 +1,9 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import { View, Button } from 'react-native';
+import React from 'react'
+import { View } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 
 import {HOMESCREEN_TITLE, ICON_SETTINGS, BUTTON_ICON_COLOR, BUTTON_ICON_BG_COLOR} from './api/constants'
 import {styles} from './styles/';
@@ -14,7 +15,7 @@ import SettingsScreen from './screens/SettingsScreen';
 const Stack = createStackNavigator();
 
 const PomodoroTimer = () => {
-  
+
   return (
     <View style={styles.container}>
       <NavigationContainer >
@@ -43,4 +44,3 @@ const PomodoroTimer = () => {
 }
 
 export default PomodoroTimer;
-
