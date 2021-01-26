@@ -1,4 +1,4 @@
-import {START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES} from '../api/constants';
+import {START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES, SET_PAUSE_STATE} from '../api/constants';
 
 //TIMER ACTIONS
 
@@ -31,5 +31,10 @@ export const updateDefaultBreakTime = newTime => ({
 export const backToDefaults = () => ({
     type: SET_DEFAULT_VALUES,
     payload: '',
+})
+
+export const togglePauseOnStatusChange = status => ({
+    type: SET_PAUSE_STATE,
+    payload: status,
 })
 

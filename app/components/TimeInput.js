@@ -1,15 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { View, TextInput } from 'react-native';
-import { useSelector } from 'react-redux';
-import {WORK_INPUT} from '../api/constants';
-
-//TODO Regex form validations
 
 const TimeInput = props => {
 
-    console.log(props.type) //TODO Return standard values based on redux and type
-
-    const initTime = props.type===WORK_INPUT?useSelector(state => state.defaultWorkTime):useSelector(state => state.defaultBreakTime)
+    const initTime = props.defaultValue;
 
     const [time, setTime] = useState({min:initTime.min, sec:initTime.sec});
       

@@ -1,4 +1,4 @@
-import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES} from '../api/constants';
+import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES, SET_PAUSE_STATE} from '../api/constants';
 import { Timer } from '../utils';
 
 const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
@@ -84,6 +84,17 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
 
         case SET_DEFAULT_VALUES:
             return {...state,
+                isWorking: true,
+                isRunning:false,
+                clock:state.clock&&state.clock.stop(),
+                defaultWorkTime: DEFAULT_WORK_TIME,
+                defaultBreakTime: DEFAULT_BREAK_TIME,
+                timeToDisplay: state.defaultWorkTime
+            }
+
+        case SET_PAUSE_STATE:
+            return {...state,
+                pauseOnChange: action.payload,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
