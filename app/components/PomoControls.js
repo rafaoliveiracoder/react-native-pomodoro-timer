@@ -1,31 +1,25 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { resetTimer, startPauseClock, stopClock, resetWorkStatus } from '../redux/actions';
+import { View, Button } from 'react-native';
+import { resetTimer,updateTimer, startPauseTimer } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PomoControls = () => {
 
   const dispatch = useDispatch();
-  const initialTimes = useSelector(state => state.initialTimes);
-  const isRunning = useSelector(state => state.clock.isRunning);
+  const isRunning = useSelector(state => state.isRunning);
 
-  const pauseStartClock = () => {
-    dispatch(startPauseClock());
+  const onPressStartPause = () => {
+    dispatch(startPauseTimer(dispatch, updateTimer));
   }
 
   const resetClock = () => {
-    dispatch(stopClock());
-    dispatch(resetWorkStatus());
-    dispatch(resetTimer({
-      min:initialTimes.initialWorkTime.min,
-      sec:initialTimes.initialBreakTime.sec
-    }));
+    dispatch(resetTimer());
   }
 
   return (
     <View>
       <Button
-        onPress={pauseStartClock}
+        onPress={onPressStartPause}
         title={!isRunning?'START':'PAUSE'}
         color="#841584"
         accessibilityLabel="Learn more about this purple button"

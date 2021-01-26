@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 const PomoStatus = () => {
 
-  const workStatus = useSelector(state => state.workStatus);
+  const workStatus = useSelector(state => state.isWorking);
   
   return (
     <View>

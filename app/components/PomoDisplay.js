@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const PomoDisplay = () => {
   
-  const timer = useSelector(state => state.timer);
+  const timer = useSelector(state => state.timeToDisplay);
 
   //Displays the time in format XX:XX. If min < 10 or sec < 10, concats a '0' at number's start.
 

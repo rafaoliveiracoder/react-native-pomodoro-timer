@@ -1,31 +1,16 @@
 export default class Timer{
-    constructor(){
-        this.timer = null;
-        this.func = null;
-        this.dispatch = null;
-        this.is_running = false;
+
+    constructor(reduxDispatcher){
+        this.reduxDispatcher = reduxDispatcher;
+        this.timer = setInterval(this.reduxDispatcher, 1000);
+        this.is_running=true;
     }
 
-    setDispatcher(dispatch, func){
-        this.func = func;
-        this.dispatch = dispatch;
-    }
-
-    start(){
-        if(!this.timer && this.dispatch && this.func){
-            //Updates redux timer state from here
-            this.timer= setInterval(()=>this.dispatch(this.func()), 1000);
-            this.is_running = true;
-        }else{
-            clearInterval(this.timer);
-            this.timer= setInterval(()=>this.dispatch(this.func()), 1000);
-            this.is_running = true;
-        }
-    }
     stop(){
         if(this.timer){
+            this.is_running=false;
             clearInterval(this.timer);
-            this.is_running = false;
+            return null;
         }
     }
 

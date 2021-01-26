@@ -1,6 +1,6 @@
 import {createStore} from 'redux';
-import reducer from './reducer';
+import timerReducer from './timerReducer';
 
-const store = createStore(reducer);
+const store = createStore(timerReducer);
 
 export default store;
