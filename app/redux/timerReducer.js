@@ -1,8 +1,8 @@
-import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_INITIAL_WORK_TIME, SET_INITIAL_BREAK_TIME} from '../api/constants';
+import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES} from '../api/constants';
 import { Timer } from '../utils';
 
-const timerReducer = (state = { initialWorkTime:DEFAULT_WORK_TIME,
-                                initialBreakTime:DEFAULT_BREAK_TIME,
+const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
+                                defaultBreakTime:DEFAULT_BREAK_TIME,
                                 timeToDisplay:DEFAULT_WORK_TIME,
                                 isWorking:true, 
                                 isRunning:false,
@@ -15,9 +15,9 @@ const timerReducer = (state = { initialWorkTime:DEFAULT_WORK_TIME,
         case UPDATE_TIMER:
             return  {...state,
                         timeToDisplay:  state.isRunning?
-                                            //Resets to next initial state (work or break) if time is done.
+                                            //Resets to next default state (work or break) if time is done.
                                             (state.timeToDisplay.min===0&&state.timeToDisplay.sec===0)?
-                                                state.isWorking?state.initialBreakTime:state.initialWorkTime
+                                                state.isWorking?state.defaultBreakTime:state.defaultWorkTime
                                             //Decreases timeToDisplay in one second until it reaches zero
                                             :state.timeToDisplay.sec>0?
                                                 state.timeToDisplay.min>=0?
@@ -61,25 +61,35 @@ const timerReducer = (state = { initialWorkTime:DEFAULT_WORK_TIME,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                timeToDisplay: state.initialWorkTime
+                timeToDisplay: state.defaultWorkTime
             }
 
-        case SET_INITIAL_WORK_TIME:
+        case SET_DEFAULT_WORK_TIME:
             return {...state,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                initialWorkTime: action.payload,
+                defaultWorkTime: action.payload,
                 timeToDisplay: action.payload
             }
 
-        case SET_INITIAL_BREAK_TIME:
+        case SET_DEFAULT_BREAK_TIME:
             return {...state,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                initialBreakTime: action.payload,
-                timeToDisplay: state.initialWorkTime
+                defaultBreakTime: action.payload,
+                timeToDisplay: state.defaultWorkTime
+            }
+
+        case SET_DEFAULT_VALUES:
+            return {...state,
+                isWorking: true,
+                isRunning:false,
+                clock:state.clock&&state.clock.stop(),
+                defaultWorkTime: DEFAULT_WORK_TIME,
+                defaultBreakTime: DEFAULT_BREAK_TIME,
+                timeToDisplay: state.defaultWorkTime
             }
 
         default:

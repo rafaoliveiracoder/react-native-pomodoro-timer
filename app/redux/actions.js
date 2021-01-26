@@ -1,4 +1,4 @@
-import {START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_INITIAL_WORK_TIME, SET_INITIAL_BREAK_TIME} from '../api/constants';
+import {START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES} from '../api/constants';
 
 //TIMER ACTIONS
 
@@ -17,14 +17,19 @@ export const resetTimer = () => ({
     payload: '',
 })
 
-//INITIAL VALUES
-export const updateInitialWorkTime = newTime => ({
-    type: SET_INITIAL_WORK_TIME,
+//DEFAULT VALUES
+export const updateDefaultWorkTime = newTime => ({
+    type: SET_DEFAULT_WORK_TIME,
     payload: newTime,
 })
 
-export const updateInitialBreakTime = newTime => ({
-    type: SET_INITIAL_BREAK_TIME,
+export const updateDefaultBreakTime = newTime => ({
+    type: SET_DEFAULT_BREAK_TIME,
     payload: newTime,
+})
+
+export const backToDefaults = () => ({
+    type: SET_DEFAULT_VALUES,
+    payload: '',
 })
 
