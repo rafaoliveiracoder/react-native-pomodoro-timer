@@ -1,4 +1,3 @@
-import { State } from 'react-native-gesture-handler';
 import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER} from '../api/constants';
 import { Timer } from '../utils';
 
