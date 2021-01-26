@@ -14,7 +14,6 @@ import SettingsScreen from './screens/SettingsScreen';
 const Stack = createStackNavigator();
 
 const PomodoroTimer = () => {
-
   return (
     <View style={styles.container}>
       <NavigationContainer >

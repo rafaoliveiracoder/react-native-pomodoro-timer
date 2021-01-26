@@ -11,20 +11,15 @@ const timerReducer = (state = { initialWorkTime:DEFAULT_WORK_TIME,
                                 pauseOnChange:false, //Based on settings file
                                 clock: null}, action) => {
 
-
-                                    console.log(state.timerComplete)
     switch(action.type){
-
-        //Decreases timer in one second until it reaches zero
-        //When timer reaches zero, it alternates automatically from Work Time to Break Time and vice-versa
-        //and sets the initial Values that can be changed via Input.
 
         case UPDATE_TIMER:
             return  {...state,
                         timeToDisplay:  state.isRunning?
-                                            (state.timeToDisplay.min===0&&state.timeToDisplay.sec===0)?(
+                                            //Resets to next initial state (work or break) if time is done.
+                                            (state.timeToDisplay.min===0&&state.timeToDisplay.sec===0)?
                                                 state.isWorking?state.initialBreakTime:state.initialWorkTime
-                                            )
+                                            //Decreases timeToDisplay in one second until it reaches zero
                                             :state.timeToDisplay.sec>0?
                                                 state.timeToDisplay.min>=0?
                                                     ({min: state.timeToDisplay.min, sec: state.timeToDisplay.sec-1})
@@ -34,20 +29,23 @@ const timerReducer = (state = { initialWorkTime:DEFAULT_WORK_TIME,
                                                     :state.timeToDisplay
                                                 :state.timeToDisplay,
 
+                        //When timeToDisplay reaches zero, it alternates automatically from Work Time to Break Time and vice-versa
                         isWorking:  state.isRunning?
                                     (state.timeToDisplay.min===0&&state.timeToDisplay.sec===0)?
                                         !state.isWorking
                                         :state.isWorking
                                     :true,
 
+                        //When timeToDisplay reaches zero, if pauseOnChange option is true, then our Timer object stops and is eliminated, else it just returns the old clock and time keeps ticking.
                         clock: state.isRunning?
                                     (state.timeToDisplay.min===0&&state.timeToDisplay.sec===0)?
                                         state.pauseOnChange?state.clock.stop():state.clock
                                         :state.clock
                                     :state.clock,
-                                    
-                        isRunning:state.clock.isRunning,
+                        //Gets clock's state from our Timer object           
+                        isRunning: state.clock.isRunning,
 
+                        //Just a control state for future use
                         timerComplete: state.isRunning&&(state.timeToDisplay.min===0 && state.timeToDisplay.sec===0)
                     }
         

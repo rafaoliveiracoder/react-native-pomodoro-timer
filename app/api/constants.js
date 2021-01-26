@@ -1,6 +1,11 @@
 //SCREEN TITLES
 export const HOMESCREEN_TITLE = 'Pomodoro Timer Deluxe Edition';
 
+//BUTTON LABELS
+export const BUTTON_START_LABEL = 'START';
+export const BUTTON_PAUSE_LABEL = 'PAUSE';
+export const BUTTON_RESET_LABEL = 'RESET';
+
 //ICONS
 export const ICON_SETTINGS = 'settings-outline';
 

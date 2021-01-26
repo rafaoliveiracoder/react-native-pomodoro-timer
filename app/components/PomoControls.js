@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Button } from 'react-native';
 import { resetTimer,updateTimer, startPauseTimer } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import {BUTTON_START_LABEL, BUTTON_PAUSE_LABEL, BUTTON_RESET_LABEL} from '../api/constants';
 
 const PomoControls = () => {
 
@@ -20,16 +21,16 @@ const PomoControls = () => {
     <View>
       <Button
         onPress={onPressStartPause}
-        title={!isRunning?'START':'PAUSE'}
+        title={!isRunning?BUTTON_START_LABEL:BUTTON_PAUSE_LABEL}
         color="#841584"
-        accessibilityLabel="Learn more about this purple button"
+        accessibilityLabel="Start/Pause timer"
       />
 
       <Button
         onPress={resetClock}
-        title='RESET'
+        title={BUTTON_RESET_LABEL}
         color="#841520"
-        accessibilityLabel="Learn more about this purple button"
+        accessibilityLabel="Reset timer"
       />
       
     </View>
