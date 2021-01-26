@@ -30,7 +30,7 @@ const timerReducer = (state = { initialWorkTime:DEFAULT_WORK_TIME,
                                                     ({min: state.timeToDisplay.min, sec: state.timeToDisplay.sec-1})
                                                 :state.timeToDisplay
                                                 :state.timeToDisplay.min>0?
-                                                    ({min: state.timeToDisplay.min-1, sec: 1})
+                                                    ({min: state.timeToDisplay.min-1, sec: 59})
                                                     :state.timeToDisplay
                                                 :state.timeToDisplay,
 
