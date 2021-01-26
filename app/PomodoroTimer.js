@@ -26,6 +26,7 @@ const PomodoroTimer = () => {
             headerTitle: HOMESCREEN_TITLE,
             headerRight: () => {
               const navigation = useNavigation();
+              //TODO Pause Timer object before changing to Settings
               return (
               <Ionicons.Button
                 backgroundColor = {BUTTON_ICON_BG_COLOR}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Button } from 'react-native';
-import { resetTimer,updateTimer, startPauseTimer } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { resetTimer,updateTimer, startPauseTimer } from '../redux/actions';
 import {BUTTON_START_LABEL, BUTTON_PAUSE_LABEL, BUTTON_RESET_LABEL} from '../api/constants';
 
 const PomoControls = () => {
@@ -32,7 +32,6 @@ const PomoControls = () => {
         color="#841520"
         accessibilityLabel="Reset timer"
       />
-      
     </View>
   );
 }
