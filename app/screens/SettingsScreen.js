@@ -2,18 +2,19 @@ import React, {useState, useEffect}  from 'react';
 import { View, Text, Button, Switch} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {styles} from '../styles/';
-import {WORK_INPUT, BREAK_INPUT, BUTTON_RESET_TO_DEFAULTS_LABEL, DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME } from '../api/constants';
+import {DEFAULT_PAUSEONCHANGE_STATE, WORK_INPUT, BREAK_INPUT, BUTTON_RESET_TO_DEFAULTS_LABEL, DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME } from '../api/constants';
 import {TimeInput} from '../components';
-import { updateDefaultWorkTime, updateDefaultBreakTime, togglePauseOnStatusChange } from '../redux/actions';
+import { updateDefaultWorkTime, updateDefaultBreakTime, togglePauseOnStatusChange} from '../redux/actions';
 
 //TODO Save input's values to a settings file
-//TODO Add a Pause On Status Change Option
 
 const SettingsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const defaultWorkTime = useSelector(state => state.defaultWorkTime);
-  const defaultBreakTime = useSelector(state => state.defaultBreakTime)
+  const defaultBreakTime = useSelector(state => state.defaultBreakTime);
+
+  const [reset, doReset] = useState(false);
   
   //Switch constants
   const [isEnabled, setIsEnabled] = useState(useSelector(state => state.pauseOnChange));
@@ -28,6 +29,8 @@ const SettingsScreen = ({ navigation }) => {
   } 
 
   const resetClock = () => {
+    doReset(oldState=>!oldState);
+    setIsEnabled(DEFAULT_PAUSEONCHANGE_STATE);
     dispatch(updateDefaultWorkTime(DEFAULT_WORK_TIME));
     dispatch(updateDefaultBreakTime(DEFAULT_BREAK_TIME));
   }
@@ -40,15 +43,9 @@ const SettingsScreen = ({ navigation }) => {
     <View style={styles.wrapper}>
       <Text>Initial States</Text>
       <Text>Work Time</Text>
-      <TimeInput type={WORK_INPUT} defaultValue={defaultWorkTime} onChange={(time)=>onTimeInputChange(time, 'work')}/>
+      <TimeInput type={WORK_INPUT} reset={reset} defaultValue={defaultWorkTime} onChange={(time)=>onTimeInputChange(time, 'work')}/>
       <Text>Break Time</Text>
-      <TimeInput type={BREAK_INPUT} defaultValue={defaultBreakTime} onChange={(time)=>onTimeInputChange(time, 'break')}/>
-      <Button
-        onPress={resetClock}
-        title={BUTTON_RESET_TO_DEFAULTS_LABEL}
-        color="#841520"
-        accessibilityLabel="Reset to defaults"
-      />
+      <TimeInput type={BREAK_INPUT} reset={reset} defaultValue={defaultBreakTime} onChange={(time)=>onTimeInputChange(time, 'break')}/>
       <Text>Pause timer when status changes</Text><Text>No</Text>
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -57,6 +54,12 @@ const SettingsScreen = ({ navigation }) => {
         onValueChange={toggleSwitch}
         value={isEnabled}
       /><Text>Yes</Text>
+      <Button
+        onPress={resetClock}
+        title={BUTTON_RESET_TO_DEFAULTS_LABEL}
+        color="#841520"
+        accessibilityLabel="Reset to defaults"
+      />
     </View>
   );
 }

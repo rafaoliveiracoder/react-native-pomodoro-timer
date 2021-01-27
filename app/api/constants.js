@@ -22,6 +22,7 @@ export const BUTTON_ICON_BG_COLOR = HEADER_COLOR;
 //REDUX
 export const DEFAULT_WORK_TIME = {min:25, sec:0};
 export const DEFAULT_BREAK_TIME = {min:5, sec:0};
+export const DEFAULT_PAUSEONCHANGE_STATE = false;
 
 //REDUX ACTIONS
 export const START_PAUSE_TIMER = 'START_PAUSE_TIMER';

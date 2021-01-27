@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { View, TextInput } from 'react-native';
-import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME} from '../api/constants';
 
 const TimeInput = props => {
 
@@ -22,6 +21,11 @@ const TimeInput = props => {
     }
 
     useEffect(()=>props.onChange(time), [time])
+
+    useEffect(()=>{
+        //Detecting a reset move
+        setTime(props.defaultValue);
+    }, [props.reset])
 
     return (
         <View>
