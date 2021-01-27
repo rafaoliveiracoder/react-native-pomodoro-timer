@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { View, TextInput } from 'react-native';
+import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME} from '../api/constants';
 
 const TimeInput = props => {
 
-    const initTime = props.defaultValue;
-
-    const [time, setTime] = useState({min:initTime.min, sec:initTime.sec});
+    const [time, setTime] = useState({min:props.defaultValue.min, sec:props.defaultValue.sec});
       
     const handleText = (text, timeType) => {
         
@@ -23,10 +22,6 @@ const TimeInput = props => {
     }
 
     useEffect(()=>props.onChange(time), [time])
-
-    useEffect(()=>{
-        props.reset>0&&setTime(props.defaultValue)
-    }, [props.reset])
 
     return (
         <View>

@@ -98,8 +98,6 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                defaultWorkTime: DEFAULT_WORK_TIME,
-                defaultBreakTime: DEFAULT_BREAK_TIME,
                 timeToDisplay: state.defaultWorkTime
             }
 

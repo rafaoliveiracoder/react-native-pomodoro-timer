@@ -12,27 +12,24 @@ import { updateDefaultWorkTime, updateDefaultBreakTime, togglePauseOnStatusChang
 const SettingsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const [reset, resetInputs] = useState(0);
-  const [defaults, setDefaults] = useState({defaultWorkTime:DEFAULT_WORK_TIME,defaultBreakTime:DEFAULT_BREAK_TIME})
-
+  const defaultWorkTime = useSelector(state => state.defaultWorkTime);
+  const defaultBreakTime = useSelector(state => state.defaultBreakTime)
+  
   //Switch constants
   const [isEnabled, setIsEnabled] = useState(useSelector(state => state.pauseOnChange));
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   
-  
-  const onTimeChange = (time, type) => {
+  const onTimeInputChange = (time, type) => {
     if(type==='work'){
-      setDefaults({...defaults,defaultWorkTime:time})
       dispatch(updateDefaultWorkTime(time))
     }else{
-      setDefaults({...defaults,defaultBreakTime:time})
       dispatch(updateDefaultBreakTime(time))
     }
   } 
 
   const resetClock = () => {
-    setDefaults({...defaults, defaultWorkTime:DEFAULT_WORK_TIME,defaultBreakTime:DEFAULT_BREAK_TIME})
-    resetInputs(oldState=> oldState+1);
+    dispatch(updateDefaultWorkTime(DEFAULT_WORK_TIME));
+    dispatch(updateDefaultBreakTime(DEFAULT_BREAK_TIME));
   }
 
   useEffect(()=>{
@@ -43,9 +40,9 @@ const SettingsScreen = ({ navigation }) => {
     <View style={styles.wrapper}>
       <Text>Initial States</Text>
       <Text>Work Time</Text>
-      <TimeInput type={WORK_INPUT} reset={reset} defaultValue={defaults.defaultWorkTime} onChange={(time)=>onTimeChange(time, 'work')}/>
+      <TimeInput type={WORK_INPUT} defaultValue={defaultWorkTime} onChange={(time)=>onTimeInputChange(time, 'work')}/>
       <Text>Break Time</Text>
-      <TimeInput type={BREAK_INPUT} reset={reset} defaultValue={defaults.defaultBreakTime} onChange={(time)=>onTimeChange(time, 'break')}/>
+      <TimeInput type={BREAK_INPUT} defaultValue={defaultBreakTime} onChange={(time)=>onTimeInputChange(time, 'break')}/>
       <Button
         onPress={resetClock}
         title={BUTTON_RESET_TO_DEFAULTS_LABEL}
