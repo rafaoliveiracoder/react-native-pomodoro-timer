@@ -38,6 +38,13 @@ const SettingsScreen = ({ navigation }) => {
   useEffect(()=>{
     dispatch(togglePauseOnStatusChange(isEnabled))
   },[isEnabled])
+
+  useEffect(() => {
+    return () => {  
+    //Save settings on file before leaving this screen
+    
+    }
+  })
   
   return (
     <View style={styles.wrapper}>
