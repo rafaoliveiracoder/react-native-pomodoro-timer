@@ -1,3 +1,4 @@
+
 //SCREEN TITLES
 export const HOMESCREEN_TITLE = 'Pomodoro Timer Deluxe Edition';
 
@@ -28,6 +29,7 @@ export const DEFAULT_PAUSEONCHANGE_STATE = false;
 export const START_PAUSE_TIMER = 'START_PAUSE_TIMER';
 export const UPDATE_TIMER = 'UPDATE_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 
 export const SET_DEFAULT_WORK_TIME = 'SET_DEFAULT_WORK_TIME';
 export const SET_DEFAULT_BREAK_TIME = 'SET_DEFAULT_BREAK_TIME';

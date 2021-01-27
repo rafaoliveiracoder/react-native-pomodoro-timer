@@ -1,5 +1,6 @@
 import React, {useState, useEffect}  from 'react';
 import { View, Text, Button, Switch} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import {styles} from '../styles/';
 import {DEFAULT_PAUSEONCHANGE_STATE, WORK_INPUT, BREAK_INPUT, BUTTON_RESET_TO_DEFAULTS_LABEL, DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME } from '../api/constants';
@@ -11,13 +12,12 @@ import { updateDefaultWorkTime, updateDefaultBreakTime, togglePauseOnStatusChang
 const SettingsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const defaultWorkTime = useSelector(state => state.defaultWorkTime);
-  const defaultBreakTime = useSelector(state => state.defaultBreakTime);
-
+  const settings = useSelector(state => state.settings);
+ 
   const [reset, doReset] = useState(false);
   
   //Switch constants
-  const [isEnabled, setIsEnabled] = useState(useSelector(state => state.pauseOnChange));
+  const [isEnabled, setIsEnabled] = useState(settings.pauseOnChange);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   
   const onTimeInputChange = (time, type) => {
@@ -28,31 +28,42 @@ const SettingsScreen = ({ navigation }) => {
     }
   } 
 
-  const resetClock = () => {
+  const resetClockToDefaults = () => {
     doReset(oldState=>!oldState);
     setIsEnabled(DEFAULT_PAUSEONCHANGE_STATE);
     dispatch(updateDefaultWorkTime(DEFAULT_WORK_TIME));
     dispatch(updateDefaultBreakTime(DEFAULT_BREAK_TIME));
   }
 
+  const storeData = async (value) => {
+    try {
+      console.log('JSON.stringify(value)', JSON.stringify(value));
+      await AsyncStorage.setItem('@pomodoro_dx_storage_Key', JSON.stringify(value))
+    } catch (e) {
+      // saving error
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    navigation.addListener('blur', () => {
+      // Going back to Home Screen
+      // Must save the data
+      storeData(settings);
+    });
+  },[settings])
+
   useEffect(()=>{
     dispatch(togglePauseOnStatusChange(isEnabled))
   },[isEnabled])
-
-  useEffect(() => {
-    return () => {  
-    //Save settings on file before leaving this screen
-    
-    }
-  })
   
   return (
     <View style={styles.wrapper}>
       <Text>Initial States</Text>
       <Text>Work Time</Text>
-      <TimeInput type={WORK_INPUT} reset={reset} defaultValue={defaultWorkTime} onChange={(time)=>onTimeInputChange(time, 'work')}/>
+      <TimeInput type={WORK_INPUT} reset={reset} defaultValue={settings.defaultWorkTime} onChange={(time)=>onTimeInputChange(time, 'work')}/>
       <Text>Break Time</Text>
-      <TimeInput type={BREAK_INPUT} reset={reset} defaultValue={defaultBreakTime} onChange={(time)=>onTimeInputChange(time, 'break')}/>
+      <TimeInput type={BREAK_INPUT} reset={reset} defaultValue={settings.defaultBreakTime} onChange={(time)=>onTimeInputChange(time, 'break')}/>
       <Text>Pause timer when status changes</Text><Text>No</Text>
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -62,7 +73,7 @@ const SettingsScreen = ({ navigation }) => {
         value={isEnabled}
       /><Text>Yes</Text>
       <Button
-        onPress={resetClock}
+        onPress={resetClockToDefaults}
         title={BUTTON_RESET_TO_DEFAULTS_LABEL}
         color="#841520"
         accessibilityLabel="Reset to defaults"

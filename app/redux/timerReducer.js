@@ -1,13 +1,11 @@
-import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, DEFAULT_PAUSEONCHANGE_STATE, START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES, SET_PAUSE_STATE} from '../api/constants';
+import {DEFAULT_WORK_TIME, DEFAULT_BREAK_TIME, DEFAULT_PAUSEONCHANGE_STATE, START_PAUSE_TIMER, UPDATE_TIMER, RESET_TIMER, SET_DEFAULT_WORK_TIME, SET_DEFAULT_BREAK_TIME, SET_DEFAULT_VALUES, SET_PAUSE_STATE, UPDATE_SETTINGS} from '../api/constants';
 import { Timer } from '../utils';
 
-const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
-                                defaultBreakTime:DEFAULT_BREAK_TIME,
+const timerReducer = (state = { settings:{defaultWorkTime:DEFAULT_WORK_TIME, defaultBreakTime:DEFAULT_BREAK_TIME, pauseOnChange:DEFAULT_PAUSEONCHANGE_STATE}, //Based on settings file
                                 timeToDisplay:DEFAULT_WORK_TIME,
                                 isWorking:true, 
                                 isRunning:false,
                                 timerComplete:false,
-                                pauseOnChange:DEFAULT_PAUSEONCHANGE_STATE, //Based on settings file
                                 clock: null}, action) => {
 
     switch(action.type){
@@ -17,7 +15,7 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
                         timeToDisplay:  state.isRunning?
                                             //Resets to next default state (work or break) if time is done.
                                             (state.timeToDisplay.min===0&&state.timeToDisplay.sec===0)?
-                                                state.isWorking?state.defaultBreakTime:state.defaultWorkTime
+                                                state.isWorking?state.settings.defaultBreakTime:state.settings.defaultWorkTime
                                             //Decreases timeToDisplay in one second until it reaches zero
                                             :state.timeToDisplay.sec>0?
                                                 state.timeToDisplay.min>=0?
@@ -38,7 +36,7 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
                         //When timeToDisplay reaches zero, if pauseOnChange option is true, then our Timer object stops and is eliminated, else it just returns the old clock and time keeps ticking.
                         clock: state.isRunning?
                                     (state.timeToDisplay.min===0&&state.timeToDisplay.sec===0)?
-                                        state.pauseOnChange?state.clock.stop():state.clock
+                                        state.settings.pauseOnChange?state.clock.stop():state.clock
                                         :state.clock
                                     :state.clock,
                         //Gets clock's state from our Timer object           
@@ -61,7 +59,7 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                timeToDisplay: state.defaultWorkTime
+                timeToDisplay: state.settings.defaultWorkTime
             }
 
         case SET_DEFAULT_WORK_TIME:
@@ -69,7 +67,7 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                defaultWorkTime: action.payload,
+                settings:{...state.settings, defaultWorkTime: action.payload},
                 timeToDisplay: action.payload
             }
 
@@ -78,8 +76,8 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                defaultBreakTime: action.payload,
-                timeToDisplay: state.defaultWorkTime
+                settings:{...state.settings, defaultBreakTime: action.payload},
+                timeToDisplay: state.settings.defaultWorkTime
             }
 
         case SET_DEFAULT_VALUES:
@@ -87,17 +85,22 @@ const timerReducer = (state = { defaultWorkTime:DEFAULT_WORK_TIME,
                 isWorking: true,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                defaultWorkTime: DEFAULT_WORK_TIME,
-                defaultBreakTime: DEFAULT_BREAK_TIME,
-                timeToDisplay: state.defaultWorkTime
+                settings:{...state.settings, defaultWorkTime: DEFAULT_WORK_TIME, defaultBreakTime: DEFAULT_BREAK_TIME},
+                timeToDisplay: state.settings.defaultWorkTime
             }
 
         case SET_PAUSE_STATE:
             return {...state,
-                pauseOnChange: action.payload,
                 isRunning:false,
                 clock:state.clock&&state.clock.stop(),
-                timeToDisplay: state.isWorking?state.defaultWorkTime:state.defaultBreakTime
+                timeToDisplay: state.isWorking?state.settings.defaultWorkTime:state.settings.defaultBreakTime,
+                settings:{...state.settings, pauseOnChange: action.payload}
+            }
+
+        case UPDATE_SETTINGS:
+            return {...state,
+                settings:{...action.payload},
+                timeToDisplay:action.payload.defaultWorkTime
             }
 
         default:

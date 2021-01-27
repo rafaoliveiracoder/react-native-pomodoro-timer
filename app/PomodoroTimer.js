@@ -1,7 +1,9 @@
 import 'react-native-gesture-handler';
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import {HOMESCREEN_TITLE, ICON_SETTINGS, BUTTON_ICON_COLOR, BUTTON_ICON_BG_COLOR} from './api/constants'
@@ -11,9 +13,32 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
+import { updateSettings} from './redux/actions';
+
+const getData = async () => {
+  try {
+    const settings = await AsyncStorage.getItem('@pomodoro_dx_storage_Key')
+    if(settings !== null) {
+      // value previously stored
+      return settings != null ? JSON.parse(settings) : null;
+    }
+  } catch(e) {
+    console.log(e)
+    // error reading value
+  }
+}
+
 const Stack = createStackNavigator();
 
 const PomodoroTimer = () => {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    getData().then(settings => {
+      settings&&dispatch(updateSettings(settings))
+      console.log('result',settings);
+    })
+  })
+
   return (
     <View style={styles.container}>
       <NavigationContainer >
