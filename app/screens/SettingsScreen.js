@@ -46,11 +46,7 @@ const SettingsScreen = ({ navigation }) => {
   }
 
   useEffect(() => {
-    navigation.addListener('blur', () => {
-      // Going back to Home Screen
-      // Must save the data
-      storeData(settings);
-    });
+    settings&&storeData(settings);
   },[settings])
 
   useEffect(()=>{
