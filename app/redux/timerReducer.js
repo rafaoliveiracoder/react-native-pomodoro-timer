@@ -50,8 +50,8 @@ const timerReducer = (state = { settings:{defaultWorkTime:DEFAULT_WORK_TIME, def
             return  {...state,
                 isRunning:  !state.isRunning,
                 clock: !state.isRunning?
-                            !state.clock&&new Timer(()=>action.payload.dispatch(action.payload.func()))
-                       :state.clock
+                            !state.clock?new Timer(()=>action.payload.dispatch(action.payload.func())):state.clock.stop()
+                        :state.clock.stop()
             }
 
         case RESET_TIMER:
