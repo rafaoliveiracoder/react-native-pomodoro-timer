@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,20 +15,7 @@ import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
 import { updateSettings } from './redux/actions';
-
-const getData = async () => {
-  try {
-    const settings = await AsyncStorage.getItem('@pomodoro_dx_storage_Key');
-    if (settings !== null) {
-      // value previously stored
-      return settings != null ? JSON.parse(settings) : null;
-    }
-  } catch (err) {
-    // error reading value
-    return err.message;
-  }
-  return false;
-};
+import { getData } from './api/helper';
 
 const Stack = createStackNavigator();
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   View, Text, Button, Switch,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles';
 import {
@@ -11,8 +10,7 @@ import {
 } from '../api/constants';
 import { TimeInput } from '../components';
 import { updateDefaultWorkTime, updateDefaultBreakTime, togglePauseOnStatusChange } from '../redux/actions';
-
-// TODO Save input's values to a settings file
+import { storeData } from '../api/helper';
 
 const SettingsScreen = () => {
   const dispatch = useDispatch();
@@ -41,16 +39,6 @@ const SettingsScreen = () => {
   };
 
   // TODO Put storeData and GetData inside api helper.js
-
-  const storeData = async (value) => {
-    try {
-      await AsyncStorage.setItem('@pomodoro_dx_storage_Key', JSON.stringify(value));
-    } catch (e) {
-      // saving error
-      // console.log(e);
-    }
-  };
-
   useEffect(() => {
     if (settings) storeData(settings);
   }, [settings]);
