@@ -1,4 +1,4 @@
-import {createStore} from 'redux';
+import { createStore } from 'redux';
 import timerReducer from './timerReducer';
 
 const store = createStore(timerReducer);
